@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-import { Searchbar } from './Searchbar/Searchbar';
+// import { Searchbar } from './Searchbar/Searchbar';
 import { Loader } from './Loader/Loader';
-import { ImageGallery } from './ImageGallery/ImageGallery';
+// import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export class App extends Component {
   state = {
@@ -49,8 +49,8 @@ export class App extends Component {
   // };
 
   render() {
-    const { loading, error, images } = this.state;
-    const isImg = Boolean(images.length);
+    const { loading } = this.state;
+    // const isImg = Boolean(images.length);
     return (
       <div>
         {loading && <Loader />}
