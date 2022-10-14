@@ -1,60 +1,73 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
-// import { Searchbar } from './Searchbar/Searchbar';
-import { Loader } from './Loader/Loader';
-// import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Searchbar } from './Searchbar/Searchbar';
+import { Loader } from 'components/Loader/Loader';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { FetchImg } from './Api/FetchImg';
+import { LoadMoreBtn } from './Button/LoadMoreBtn';
 
 export class App extends Component {
   state = {
     images: [],
-    searchQuery: '',
+    searchValue: '',
     page: 1,
     loading: false,
     error: null,
   };
 
-  componentDidMount() {
-    this.fetchImg();
-  }
+  // методи життєвого циклу
 
-  fetchImg() {
-    console.log('fetch');
-    const { page } = this.state;
+  async componentDidUpdate(_, prevState) {
+    try {
+      const { page, searchValue } = this.state;
 
-    this.setState({ loading: true });
-
-    axios
-      .get(
-        `https://pixabay.com/api/?q=cat&page=${page}&key=29338036-8ca2af07466f8459e5d49b2a7&image_type=photo&orientation=horizontal&per_page=12`
-      )
-      .then(({ data }) => {
-        // розпаковуємо та записуємо в стейт
-        this.setState(({ images }) => {
-          return {
-            images: [...images, ...data.hits],
-          };
+      if (prevState.searchValue !== searchValue || prevState.page !== page) {
+        this.setState({ isLoading: true });
+        await FetchImg(searchValue, page).then(data => {
+          return data.hits.length === 0
+            ? 'Ops! We did not find any images matching your request. Please try again.'
+            : this.setState(prevState => ({
+                images: [...prevState.images, ...data.hits],
+              }));
         });
-      })
-      .catch(error => {
-        this.setState({ error });
-      })
-      .finally(() => {
-        this.setState({ loading: false });
-      });
+        this.setState({ isLoading: false });
+      }
+    } catch (error) {
+      this.setState({ isLoading: true });
+      console.log(error);
+      this.setState({ isLoading: false });
+    }
   }
 
-  // handleFormSubmit = searchQuery => {
-  //   this.setState({ searchQuery });
-  // };
+  // метод додавання нових картинок через btn load more
+
+  LoadMore = () => {
+    this.setState(({ page }) => {
+      return {
+        page: page + 1,
+      };
+    });
+  };
+
+  //перекидання значення з інпуту через пропс з (searchbar) у основний стейт
+
+  handleFormSubmit = searchValue => {
+    this.setState({ searchValue, page: 1 });
+  };
 
   render() {
-    const { loading } = this.state;
-    // const isImg = Boolean(images.length);
+    const { loading, images } = this.state;
+    const isImg = Boolean(images.length);
     return (
       <div>
         {loading && <Loader />}
-        {/* {isImg && <ImageGallery images={images} />} */}
+        <Searchbar searchValue={this.handleFormSubmit} />
+        {isImg && <ImageGallery images={images} />}
+        {isImg && (
+          <LoadMoreBtn type="button" onClick={this.LoadMore}>
+            Load more
+          </LoadMoreBtn>
+        )}
       </div>
     );
   }
