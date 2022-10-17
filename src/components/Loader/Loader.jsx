@@ -1,5 +1,5 @@
 import { Spinner } from 'components/Loader/Loader.styled';
 
 export const Loader = () => {
-  return <Spinner size="50" />;
+  return <Spinner size="70" />;
 };

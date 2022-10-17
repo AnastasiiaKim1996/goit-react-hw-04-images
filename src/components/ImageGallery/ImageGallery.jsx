@@ -1,24 +1,24 @@
 import PropTypes from 'prop-types';
-import {
-  ImgGallery,
-  Gallery,
-} from 'components/ImageGallery/ImageGallery.styled';
+import { ImgGallery } from 'components/ImageGallery/ImageGallery.styled';
 import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
 
-export const ImageGallery = ({ images, ...otherProps }) => {
+export const ImageGallery = ({ images, onImgClick }) => {
   return (
-    <div>
-      <ImgGallery>
-        {images.map(img => (
-          <Gallery className="" key={img.id}>
-            <ImageGalleryItem image={img} {...otherProps} />
-          </Gallery>
-        ))}
-      </ImgGallery>
-    </div>
+    <ImgGallery>
+      {images.map(img => (
+        <ImageGalleryItem
+          key={img.id}
+          image={img.webformatURL}
+          largeImage={img.largeImageURL}
+          tags={img.tags}
+          onModal={onImgClick}
+        />
+      ))}
+    </ImgGallery>
   );
 };
 
 ImageGallery.propTypes = {
   images: PropTypes.array.isRequired,
+  onImgClick: PropTypes.func,
 };

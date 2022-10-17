@@ -36,10 +36,13 @@ export class Searchbar extends Component {
     return (
       <header>
         <Form onSubmit={this.handleSubmit}>
-          <a href="https://anastasiiakim1996.github.io/goit-js-hw-11/" title="">
+          <a
+            href="https://anastasiiakim1996.github.io/goit-react-hw-03-image-finder/"
+            title=""
+          >
             <Title>
               Image <Blue>S</Blue>
-              <Red c>e</Red>
+              <Red>e</Red>
               <Yellow>a</Yellow>
               <Blue>r</Blue>
               <Green>c</Green>

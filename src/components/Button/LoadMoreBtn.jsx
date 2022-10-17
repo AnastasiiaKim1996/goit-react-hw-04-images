@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { Button, ButtonTitle } from 'components/Button/LoadMoreBtn.styled';
 import { ImImages } from 'react-icons/im';
 
-export const LoadMoreBtn = ({ onClick }) => {
+export const LoadMoreBtn = ({ loadMoreImg }) => {
   return (
-    <Button onClick={() => onClick()}>
+    <Button onClick={loadMoreImg}>
       <ButtonTitle>Load more</ButtonTitle>
       <ImImages />
     </Button>
@@ -12,5 +12,5 @@ export const LoadMoreBtn = ({ onClick }) => {
 };
 
 LoadMoreBtn.propTypes = {
-  handleClick: PropTypes.func.isRequired,
+  loadMoreImg: PropTypes.func.isRequired,
 };
