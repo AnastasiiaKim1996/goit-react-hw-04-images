@@ -12,6 +12,8 @@ import { toastSuccess, toastError, toastWarn } from './Notification/Toasts';
 
 import brokenImg from 'components/Img/brokenImage.png';
 
+import React from 'react';
+
 export const App = () => {
   const [images, setImages] = useState([]);
   const [searchValue, setSearchValue] = useState('');
