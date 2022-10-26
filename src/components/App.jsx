@@ -12,7 +12,7 @@ import { toastSuccess, toastError, toastWarn } from './Notification/Toasts';
 
 import brokenImg from 'components/Img/brokenImage.png';
 
-export const App = ({}) => {
+export const App = () => {
   const [images, setImages] = useState([]);
   const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(1);
